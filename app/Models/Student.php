@@ -11,6 +11,8 @@ class Student extends Model
 
     protected $fillable = ['name', 'email', 'class_id', 'section_id'];
 
+    protected $with = ['classess', 'section'];
+
     public function section()
     {
         return $this->belongsTo(Section::class, 'section_id');
