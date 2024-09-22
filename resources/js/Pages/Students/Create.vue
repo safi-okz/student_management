@@ -33,11 +33,10 @@
                                             v-model="formData.name"
                                             type="text"
                                             id="name"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm @error text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300 @enderror"
+                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.name }"
                                         />
-                                        <p class="text-red-500">
-                                            This field is required
-                                        </p>
+                                        <InputError :message="form.errors.name" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -52,7 +51,9 @@
                                             id="email"
                                             autocomplete="email"
                                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.email }"
                                         />
+                                        <InputError :message="form.errors.email" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -65,12 +66,14 @@
                                             v-model="formData.class_id"
                                             id="class_id"
                                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.class_id }"
                                         >
                                             <option value="">
                                                 Select a Class
                                             </option>
                                             <option v-for="item in classes.data" :key="item.id" :value="item.id">{{ item.name }}</option>
                                         </select>
+                                        <InputError :message="form.errors.class_id" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -83,12 +86,14 @@
                                             v-model="formData.section_id"
                                             id="section_id"
                                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.section_id }"
                                         >
                                             <option value="">
                                                 Select a Section
                                             </option>
                                             <option v-for="section in sections.data" :key="section.id" :value="section.id">{{ section.name }}</option>
                                         </select>
+                                        <InputError :message="form.errors.section_id" class="mt-2" />
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +123,7 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import InputError from '@/Components/InputError.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { watch, ref } from 'vue';
