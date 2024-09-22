@@ -34,7 +34,9 @@
                                 :key="link.label"
                             >
                                 <button
+                                    @click.prevent="updatePageNumber(link)"
                                     class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                                     :disabled="link.url === null || link.active === true"
                                     :class="{
                                         'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': link.active,
                                         'bg-white border-gray-300 text-gray-500 hover:bg-gray-50': !link.active,
@@ -52,7 +54,7 @@
 </template>
 
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     data: {
@@ -60,6 +62,15 @@ const props = defineProps({
         required: true
     }
 });
+
+const updatePageNumber = (link) => {
+    let pageNumber = link.url.split('=')[1];
+    console.log('page number ', pageNumber);
+
+    router.visit(`/students?page=${pageNumber}`, {
+        preserveScroll: true
+    });
+}
 </script>
 
 <style>
