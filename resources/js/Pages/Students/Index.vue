@@ -1,10 +1,18 @@
 <template>
+
+<Head title="Students List" />
+
+<AuthenticatedLayout>
+    <template #header>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Students List</h2>
+    </template>
+
     <div class="bg-gray-100 py-10">
       <div class="mx-auto max-w-7xl">
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-              <h1 class="text-xl font-semibold text-gray-900">Students</h1>
+              <!-- <h1 class="text-xl font-semibold text-gray-900">Students</h1> -->
               <p class="mt-2 text-sm text-gray-700">A list of all the Students.</p>
             </div>
 
@@ -82,13 +90,15 @@
         </div>
       </div>
     </div>
+</AuthenticatedLayout>
 </template>
 
   <script setup>
+  import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import MagnifyingGlass from '@/Components/Icons/MignifyingGlass.vue';
   import Pagination from '@/Components/Pagination.vue';
   import { ref, watch } from 'vue';
-  import { Link, usePage } from '@inertiajs/vue3';
+  import { Link, usePage, Head } from '@inertiajs/vue3';
   import { Inertia } from '@inertiajs/inertia';
 
   const props = defineProps({

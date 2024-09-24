@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
                 <div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-12">
-                    <form>
+                    <form @submit.prevent="createStudnet">
                         <div class="shadow sm:rounded-md sm:overflow-hidden">
                             <div class="bg-white py-6 px-4 space-y-6 sm:p-6">
                                 <div>
@@ -34,9 +34,9 @@
                                             type="text"
                                             id="name"
                                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.name }"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': formData.errors.name }"
                                         />
-                                        <InputError :message="form.errors.name" class="mt-2" />
+                                        <InputError v-if="formData.errors && formData.errors.name" :message="formData.errors.name" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -51,9 +51,9 @@
                                             id="email"
                                             autocomplete="email"
                                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.email }"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': formData.errors.email }"
                                         />
-                                        <InputError :message="form.errors.email" class="mt-2" />
+                                        <InputError v-if="formData.errors && formData.errors.email" :message="formData.errors.email" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -66,14 +66,14 @@
                                             v-model="formData.class_id"
                                             id="class_id"
                                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.class_id }"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': formData.errors.class_id }"
                                         >
                                             <option value="">
                                                 Select a Class
                                             </option>
                                             <option v-for="item in classes.data" :key="item.id" :value="item.id">{{ item.name }}</option>
                                         </select>
-                                        <InputError :message="form.errors.class_id" class="mt-2" />
+                                        <InputError v-if="formData.errors && formData.errors.class_id" :message="formData.errors.class_id" class="mt-2" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -86,14 +86,14 @@
                                             v-model="formData.section_id"
                                             id="section_id"
                                             class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': form.errors.section_id }"
+                                            :class="{'text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300': formData.errors.section_id }"
                                         >
                                             <option value="">
                                                 Select a Section
                                             </option>
                                             <option v-for="section in sections.data" :key="section.id" :value="section.id">{{ section.name }}</option>
                                         </select>
-                                        <InputError :message="form.errors.section_id" class="mt-2" />
+                                        <InputError v-if="formData.errors && formData.errors.section_id" :message="formData.errors.section_id" class="mt-2" />
                                     </div>
                                 </div>
                             </div>
@@ -155,4 +155,8 @@ const getSection = async (classId) => {
 }
 
 console.log("classes dataddd ", props.classes);
+
+const createStudnet = () => {
+    formData.post(route('students.store'));
+}
 </script>
