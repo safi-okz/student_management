@@ -7,6 +7,7 @@ use App\Http\Resources\ClassesResource;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Http\Resources\StudentResource;
+use App\Http\Requests\UpdateStudentReques;
 use App\Models\Classess;
 use Redirect;
 
@@ -32,6 +33,22 @@ class StudentController extends Controller
 
     public function store(StoreStudentRequest $request) {
         Student::create($request->validated());
+
+        return redirect()->route('students.index');
+    }
+
+    public function edit(Student $student) {
+        $classes = ClassesResource::collection(Classess::all());
+
+        return inertia('Students/Edit', [
+            'classes' => $classes,
+            'student' => StudentResource::make($student)
+    ]);
+    }
+
+    public function update(UpdateStudentReques $request, Student $student) {
+
+        $student->update($request->validated());
 
         return redirect()->route('students.index');
     }

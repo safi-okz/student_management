@@ -76,7 +76,7 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ student.section.name }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ convertDate(student.created_at) }}</td>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                          <a :href="route('students.edit', student.id)" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                           <button class="ml-2 text-indigo-600 hover:text-indigo-900">Delete</button>
                         </td>
                       </tr>
