@@ -99,7 +99,7 @@
   import MagnifyingGlass from '@/Components/Icons/MignifyingGlass.vue';
   import Pagination from '@/Components/Pagination.vue';
   import { computed, ref, watch } from 'vue';
-  import { Link, usePage, Head, useForm } from '@inertiajs/vue3';
+  import { Link, usePage, Head, useForm, router } from '@inertiajs/vue3';
   import { Inertia } from '@inertiajs/inertia';
 
   const props = defineProps({
@@ -113,7 +113,7 @@
     }
   });
 
-  const search = ref(''), pageNumber = ref(1);
+  const search = ref(usePage().props.search), pageNumber = ref(1);
 
   const studentsUrl = computed(() => {
         const url = new URL(route('students.index'));
@@ -123,7 +123,17 @@
         if(search.value){
             url.searchParams.append('search', search.value);
         }
-  })
+
+        return url;
+  });
+
+  watch(() => studentsUrl.value, (updateUrl) => {
+            router.visit(updateUrl, {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true
+            });
+  });
 
 //   const limit = ref(props.limit);
 

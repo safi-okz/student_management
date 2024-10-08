@@ -14,13 +14,27 @@ use Redirect;
 class StudentController extends Controller
 {
     public function index(Request $request) {
+
+        $studentQuery = Student::query();
+
+        $this->searchQuery($studentQuery, $request->search);
+
+
         $limit = $request->input('limit', 10); // Default to 10 if not provided
-    $students = StudentResource::collection(Student::paginate($limit));
+    $students = StudentResource::collection($studentQuery->paginate($limit));
 
     return inertia('Students/Index', [
         'students' => $students,
-        'limit' => $limit
+        'limit' => $limit,
+        'search' => $request->search ?? ''
     ]);
+    }
+
+    protected function searchQuery($query, $search) {
+        return $query->when($search, function($query, $search) {
+            $query->where('name' , 'like', '%'.$search.'%')
+            ->Orwhere('email', 'like', '%'.$search.'%');
+        });
     }
 
     public function create(Request $request) {
