@@ -43,6 +43,7 @@
 
               <input
                 type="text"
+                v-model="search"
                 autocomplete="off"
                 placeholder="Search students data..."
                 id="search"
@@ -77,7 +78,7 @@
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ convertDate(student.created_at) }}</td>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <a :href="route('students.edit', student.id)" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                          <button class="ml-2 text-indigo-600 hover:text-indigo-900">Delete</button>
+                          <button @click="deleteStudent(student.id)" class="ml-2 text-indigo-600 hover:text-indigo-900">Delete</button>
                         </td>
                       </tr>
                     </tbody>
@@ -97,8 +98,8 @@
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import MagnifyingGlass from '@/Components/Icons/MignifyingGlass.vue';
   import Pagination from '@/Components/Pagination.vue';
-  import { ref, watch } from 'vue';
-  import { Link, usePage, Head } from '@inertiajs/vue3';
+  import { computed, ref, watch } from 'vue';
+  import { Link, usePage, Head, useForm } from '@inertiajs/vue3';
   import { Inertia } from '@inertiajs/inertia';
 
   const props = defineProps({
@@ -111,6 +112,18 @@
         default: 10
     }
   });
+
+  const search = ref(''), pageNumber = ref(1);
+
+  const studentsUrl = computed(() => {
+        const url = new URL(route('students.index'));
+
+        url.searchParams.append('page', pageNumber.value);
+
+        if(search.value){
+            url.searchParams.append('search', search.value);
+        }
+  })
 
 //   const limit = ref(props.limit);
 
@@ -137,6 +150,14 @@ const fetchStudents = () => {
       day: 'numeric',
     });
   };
+
+
+  const deleteForm = useForm({});
+
+  const deleteStudent = (id) => {
+    if(confirm('are you want to delete?'))
+        deleteForm.delete(route('students.destroy', id));
+  }
   </script>
 
   <style>
