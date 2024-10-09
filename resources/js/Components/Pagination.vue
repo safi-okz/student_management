@@ -34,7 +34,7 @@
                                 :key="link.label"
                             >
                                 <button
-                                    @click.prevent="updatePageNumber(link)"
+                                    @click.prevent="$emit('updatePageNumber', link)"
                                     class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
                                      :disabled="link.url === null || link.active === true"
                                     :class="{
@@ -62,6 +62,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const emit = defineEmits(['updatePageNumber']);
 
 const updatePageNumber = (link) => {
     let pageNumber = link.url.split('=')[1];

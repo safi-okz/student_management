@@ -84,7 +84,7 @@
                     </tbody>
                   </table>
                 </div>
-                <Pagination :data="students.meta" />
+                <Pagination :data="students.meta" @updatePageNumber="updatePageNumber" />
               </div>
             </div>
           </div>
@@ -127,6 +127,10 @@
         return url;
   });
 
+  const updatePageNumber = (link) => {
+        pageNumber.value = link.url.split('=')[1];
+  }
+
   watch(() => studentsUrl.value, (updateUrl) => {
             router.visit(updateUrl, {
                 preserveScroll: true,
@@ -134,6 +138,12 @@
                 replace: true
             });
   });
+
+//   watch(() => search.value, (val) => {
+//     if(val) {
+//         pageNumber.value = 1;
+//     }
+//   })
 
 //   const limit = ref(props.limit);
 
